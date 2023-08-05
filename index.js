@@ -8,6 +8,7 @@ const Jwt = require('jsonwebtoken');
 const jwtKey = 'e-com';
 const cors=require('cors');
 const Contact=require('./contactmodel')
+const Design=require('./designmodel')
 
 
 const app=express();
@@ -21,6 +22,8 @@ connectDB();
 
 app.get('/get',async(req,res)=>{
     const data=await User.find();
+
+
     res.send({"detail":data})
 })
 app.post('/save',async(req,res) =>{
@@ -28,6 +31,14 @@ app.post('/save',async(req,res) =>{
     const data=req.body;
     const user=new User(data);
     const result=await user.save();
+    res.send({"result":result});
+   
+})
+app.post('/save_design',async(req,res) =>{
+    console.log(req.body);
+    const data=req.body;
+    const design=new Design(data);
+    const result=await design.save();
     res.send({"result":result});
    
 })
@@ -41,6 +52,10 @@ app.post('/contact',async(req,res) =>{
 })
 app.get('/get/contact',async(req,res)=>{
     const data=await Contact.find();
+    res.send({"detail":data})
+})
+app.get('/get/design',async(req,res)=>{
+    const data=await Design.find();
     res.send({"detail":data})
 })
 app.delete('/delete/:id',async(req,res)=>{
