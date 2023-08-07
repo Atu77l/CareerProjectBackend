@@ -17,13 +17,11 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(cors());
 
-mongoose.set("strictQuery", false);
+mongoose.set("strictQuery", true);
 connectDB();
 
 app.get('/get',async(req,res)=>{
     const data=await User.find();
-
-
     res.send({"detail":data})
 })
 app.post('/save',async(req,res) =>{
@@ -54,6 +52,10 @@ app.get('/get/contact',async(req,res)=>{
     const data=await Contact.find();
     res.send({"detail":data})
 })
+app.get('/get/contact/:id',async(req,res)=>{
+    const data=await Contact.find({'_id':req.params.id});
+    res.send({"detail":data})
+})
 app.get('/get/design',async(req,res)=>{
     const data=await Design.find();
     res.send({"detail":data})
@@ -69,24 +71,7 @@ app.patch('/update/:id', async(req,res)=>{
         { $set: req.body });
     res.send(response);
 })
-// app.post('/login',async(req,res)=>{
-//     console.log("hello");
-//     if (req.body.password && req.body.email) {
-//         let user = await User.findOne(req.body).select("-password");
-//         if (user) {
-//             Jwt.sign({user}, jwtKey, {expiresIn:"2h"},(err,token)=>{
-//                 if(err){
-//                     res.send("Something went wrong")  
-//                 }
-//                 res.send({user,auth:token})
-//             })
-//         } else {
-//             res.send({ result: "No User found" })
-//         }
-//     } else {
-//         res.send({ result: "No User found" })
-//     }    
-// })
+
 app.listen(4000,()=>{
     console.log("connected to port");
 })

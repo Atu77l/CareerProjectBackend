@@ -2,9 +2,11 @@ const mongoose=require('mongoose');
 
 const connectDB=async ()=>{
     try{
-        const conn=await mongoose.connect("mongodb://127.0.0.1:27017/career?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.2",{
-            useNewUrlParser:true,
-            useUnifiedTopology:true
+        
+        const conn=await mongoose.connect("mongodb://localhost:27017/kuku",{
+            useNewUrlParser: true, 
+    useUnifiedTopology: true,
+    family: 4,
         });
         console.log(`Mongo DB Connected`);
     }
